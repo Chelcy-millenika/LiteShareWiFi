@@ -24,7 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.android.wifidirect.DeviceListFragment.DeviceActionListener;
+import com.cnnfe.liteshare.DeviceListFragment.DeviceActionListener;
 
 /**
  * An activity that uses WiFi Direct APIs to discover and connect with available
@@ -33,7 +33,7 @@ import com.example.android.wifidirect.DeviceListFragment.DeviceActionListener;
  * The application should also register a BroadcastReceiver for notification of
  * WiFi state related events.
  */
-@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH) // different from original
+
 public class WiFiDirectActivity extends Activity implements ChannelListener, DeviceActionListener {
 
     public static final String TAG = "wifidirectdemo";
