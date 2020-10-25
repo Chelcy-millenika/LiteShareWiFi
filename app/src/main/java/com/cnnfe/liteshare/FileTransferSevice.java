@@ -18,7 +18,7 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 
 
-public class FileTransferService extends IntentService{
+class FileTransferService extends IntentService{       //file transfer was initially public
 
 
     private static final int SOCKET_TIMEOUT = 5000;
