@@ -18,7 +18,7 @@
             <!-- Preview: layout=@layout/row_devices -->
         </fragment>
         <fragment
-            class="com.cnnfe.liteshare.DeviceDetailFragment"
+            class="com.cnnfe.liteshare.DeviceDetailFeagment"
             android:id="@+id/frag_detail"
             android:layout_width="match_parent"
             android:layout_height="match_parent">

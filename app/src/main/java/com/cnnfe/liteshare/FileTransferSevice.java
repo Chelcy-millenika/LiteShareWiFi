@@ -1,13 +1,11 @@
 package com.cnnfe.liteshare;
 
 
-import android.annotation.TargetApi;
 import android.app.IntentService;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.util.Log;
 
 import java.io.FileNotFoundException;
@@ -63,7 +61,7 @@ class FileTransferService extends IntentService{       //file transfer was initi
                 } catch (FileNotFoundException e) {
                     Log.d(WiFiDirectActivity.TAG, e.toString());
                 }
-                DeviceDetailFragment.copyFile(is, stream);
+                DeviceDetailFeagment.copyFile(is, stream);
                 Log.d(WiFiDirectActivity.TAG, "Client: Data written");
             } catch (IOException e) {
                 Log.e(WiFiDirectActivity.TAG, e.getMessage());
