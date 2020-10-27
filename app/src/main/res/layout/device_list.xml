@@ -20,15 +20,15 @@ android:paddingTop="3dp">
 
 <!-- Self information -->
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="?android:attr/listPreferredItemHeight"
     android:background="?android:attr/activatedBackgroundIndicator"
     android:padding="3dip">
+
     <ImageView
         android:id="@+id/icon"
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
+        android:layout_width="61dp"
+        android:layout_height="64dp"
         android:layout_marginRight="2dp"
         android:src="@drawable/machine" />
     <LinearLayout
@@ -36,19 +36,21 @@ android:paddingTop="3dp">
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="fill_parent">
+
         <TextView
             android:id="@+id/my_name"
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="34dp"
             android:layout_weight="1"
             android:gravity="center_vertical" />
+
         <TextView
             android:id="@+id/my_status"
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
             android:layout_weight="1"
-            android:singleLine="true"
-            android:ellipsize="marquee" />
+            android:ellipsize="marquee"
+            android:singleLine="true" />
     </LinearLayout>
 </LinearLayout>
 
@@ -65,17 +67,17 @@ android:paddingTop="3dp">
     android:background="@android:color/holo_blue_light" />
 
 <!-- Available peers -->
-<ListView
-    android:id="@id/android:list"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_weight="1"
-    android:drawSelectorOnTop="false" />
+    <ListView
+        android:id="@id/android:list"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:layout_weight="1"
+        android:drawSelectorOnTop="false" />
 
-<TextView
-    android:id="@id/android:empty"
-    android:layout_width="match_parent"
-    android:layout_gravity="center"
-    android:layout_height="match_parent"
-    android:text="@string/empty_message" />
+    <TextView
+        android:id="@id/android:empty"
+        android:layout_width="404dp"
+        android:layout_height="409dp"
+        android:layout_gravity="center"
+        android:text="@string/empty_message" />
 </LinearLayout>
