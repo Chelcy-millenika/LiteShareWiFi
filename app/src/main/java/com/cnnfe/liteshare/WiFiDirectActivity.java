@@ -1,7 +1,5 @@
 package com.cnnfe.liteshare;
 
-
-
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -22,6 +20,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.cnnfe.liteshare.DeviceListFragment.DeviceActionListener;
 
 /**
@@ -32,7 +33,7 @@ import com.cnnfe.liteshare.DeviceListFragment.DeviceActionListener;
  * WiFi state related events.
  */
 
-public class WiFiDirectActivity extends Activity implements ChannelListener, DeviceActionListener {
+public class WiFiDirectActivity extends AppCompatActivity implements ChannelListener, DeviceActionListener {
 
     public static final String TAG = "wifidirectdemo";
     private WifiP2pManager manager;
@@ -64,6 +65,9 @@ public class WiFiDirectActivity extends Activity implements ChannelListener, Dev
 
         manager = (WifiP2pManager) getSystemService(Context.WIFI_P2P_SERVICE);
         channel = manager.initialize(this, getMainLooper(), null);
+
+        //Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+
     }
 
     /** register the BroadcastReceiver with the intent values to be matched */
@@ -99,6 +103,7 @@ public class WiFiDirectActivity extends Activity implements ChannelListener, Dev
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.action_items, menu);
         return true;
@@ -248,6 +253,5 @@ public class WiFiDirectActivity extends Activity implements ChannelListener, Dev
                 });
             }
         }
-
     }
 }

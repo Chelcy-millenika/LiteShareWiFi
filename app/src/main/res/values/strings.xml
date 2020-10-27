@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">LiteShare</string>
+    <string name="app_name">LiteShareWiFi</string>
 
     <string name="enable_p2p_button">P2P On/Off</string>
     <string name="discover_peers_button">Discover</string>
