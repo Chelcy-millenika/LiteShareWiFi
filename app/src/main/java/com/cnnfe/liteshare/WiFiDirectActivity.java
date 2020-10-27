@@ -5,12 +5,14 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.net.wifi.p2p.WifiP2pConfig;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.net.wifi.p2p.WifiP2pManager.ActionListener;
 import android.net.wifi.p2p.WifiP2pManager.Channel;
 import android.net.wifi.p2p.WifiP2pManager.ChannelListener;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
@@ -20,10 +22,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.cnnfe.liteshare.DeviceListFragment.DeviceActionListener;
+
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
+import static android.Manifest.permission.ACCESS_WIFI_STATE;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 /**
  * An activity that uses WiFi Direct APIs to discover and connect with available
@@ -55,6 +62,8 @@ public class WiFiDirectActivity extends AppCompatActivity implements ChannelList
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
+        askPermissions();
 
         // add necessary intent values to be matched.
 
@@ -163,7 +172,6 @@ public class WiFiDirectActivity extends AppCompatActivity implements ChannelList
         DeviceDetailFeagment fragment = (DeviceDetailFeagment) getFragmentManager()
                 .findFragmentById(R.id.frag_detail);
         fragment.showDetails(device);
-
     }
 
     @Override
@@ -252,6 +260,20 @@ public class WiFiDirectActivity extends AppCompatActivity implements ChannelList
                     }
                 });
             }
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void askPermissions()
+    {
+        if(getPackageManager().checkPermission(ACCESS_FINE_LOCATION, getPackageName()) != PackageManager.PERMISSION_GRANTED)
+        {
+            requestPermissions(new String[]{ACCESS_FINE_LOCATION}, 111);
+        }
+
+        if(getPackageManager().checkPermission(ACCESS_WIFI_STATE, getPackageName()) != PackageManager.PERMISSION_GRANTED)
+        {
+            requestPermissions(new String[]{ACCESS_WIFI_STATE}, 111);
         }
     }
 }
