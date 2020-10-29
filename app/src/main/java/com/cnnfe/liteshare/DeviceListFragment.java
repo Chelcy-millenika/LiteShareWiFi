@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +66,6 @@ public class DeviceListFragment extends ListFragment implements PeerListListener
                 return "Unavailable";
             default:
                 return "Unknown";
-
         }
     }
 
@@ -106,10 +106,12 @@ public class DeviceListFragment extends ListFragment implements PeerListListener
                 v = vi.inflate(R.layout.row_devices, null);
             }
             WifiP2pDevice device = items.get(position);
-            if (device != null) {
+            if (device != null)
+            {
                 TextView top = (TextView) v.findViewById(R.id.device_name);
                 TextView bottom = (TextView) v.findViewById(R.id.device_details);
-                if (top != null) {
+                if (top != null)
+                {
                     top.setText(device.deviceName);
                 }
                 if (bottom != null) {
@@ -144,6 +146,7 @@ public class DeviceListFragment extends ListFragment implements PeerListListener
         peers.addAll(peerList.getDeviceList());
         ((WiFiPeerListAdapter) getListAdapter()).notifyDataSetChanged();
         if (peers.size() == 0) {
+            Toast.makeText(getActivity(), "No devices found", Toast.LENGTH_SHORT).show();
             Log.d(WiFiDirectActivity.TAG, "No devices found");
             return;
         }
@@ -186,5 +189,4 @@ public class DeviceListFragment extends ListFragment implements PeerListListener
 
         void disconnect();
     }
-
 }

@@ -30,6 +30,7 @@ import com.cnnfe.liteshare.DeviceListFragment.DeviceActionListener;
 
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static android.Manifest.permission.ACCESS_WIFI_STATE;
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 /**
@@ -58,6 +59,7 @@ public class WiFiDirectActivity extends AppCompatActivity implements ChannelList
         this.isWifiP2pEnabled = isWifiP2pEnabled;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,7 +78,6 @@ public class WiFiDirectActivity extends AppCompatActivity implements ChannelList
         channel = manager.initialize(this, getMainLooper(), null);
 
         //Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
-
     }
 
     /** register the BroadcastReceiver with the intent values to be matched */
@@ -180,6 +181,7 @@ public class WiFiDirectActivity extends AppCompatActivity implements ChannelList
 
             @Override
             public void onSuccess() {
+                Toast.makeText(WiFiDirectActivity.this, "connection started", Toast.LENGTH_SHORT).show();
                 // WiFiDirectBroadcastReceiver will notify us. Ignore for now.
             }
 
@@ -275,5 +277,12 @@ public class WiFiDirectActivity extends AppCompatActivity implements ChannelList
         {
             requestPermissions(new String[]{ACCESS_WIFI_STATE}, 111);
         }
+
+        if(getPackageManager().checkPermission(WRITE_EXTERNAL_STORAGE, getPackageName()) != PackageManager.PERMISSION_GRANTED)
+        {
+            requestPermissions(new String[]{WRITE_EXTERNAL_STORAGE}, 111);
+        }
+
+
     }
 }

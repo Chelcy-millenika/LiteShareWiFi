@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 
+import androidx.core.app.JobIntentService;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,7 +18,7 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 
 
-class FileTransferService extends IntentService{       //file transfer was initially public
+public class FileTransferService extends JobIntentService {
 
 
     private static final int SOCKET_TIMEOUT = 5000;
@@ -27,17 +29,17 @@ class FileTransferService extends IntentService{       //file transfer was initi
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
      *
-     * @param name Used to name the worker thread, important only for debugging.
+     * param name Used to name the worker thread, important only for debugging.
      */
-    public FileTransferService(String name) {
+   /* public FileTransferService(String name) {
         super(name);
     }
     public FileTransferService() {
         super("FileTransferServices");
-    }
+    }*/
 
     @Override
-    protected void onHandleIntent(Intent intent) {
+    protected void onHandleWork(Intent intent) {
 
 
         Context context = getApplicationContext();
@@ -79,5 +81,14 @@ class FileTransferService extends IntentService{       //file transfer was initi
             }
 
         }
+    }
+
+    public FileTransferService() {
+        super();
+    }
+
+    public static void enqueueWork (Context context, Intent work)
+    {
+        enqueueWork(context, FileTransferService.class, 1, work);
     }
 }
