@@ -1,17 +1,24 @@
 package com.cnnfe.liteshare;
 
 
+import android.app.Application;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.net.wifi.p2p.WifiP2pDevice;
+import android.net.wifi.p2p.WifiP2pInfo;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.net.wifi.p2p.WifiP2pManager.Channel;
 import android.net.wifi.p2p.WifiP2pManager.PeerListListener;
+import android.os.Build;
 import android.util.Log;
+import android.widget.Toast;
 
-
+import java.nio.channels.OverlappingFileLockException;
 
 
 public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
@@ -42,7 +49,6 @@ public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
             } else {
                 activity.setIsWifiP2pEnabled(false);
                 activity.resetData();
-
             }
             Log.d(WiFiDirectActivity.TAG, "P2P state changed - " + state);
         } else if (WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION.equals(action)) {
@@ -57,14 +63,19 @@ public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
             Log.d(WiFiDirectActivity.TAG, "P2P peers changed");
         } else if (WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION.equals(action)) {
 
+            Toast.makeText(activity, "connection changed", Toast.LENGTH_SHORT).show();
             if (manager == null) {
                 return;
             }
 
-            NetworkInfo networkInfo = (NetworkInfo) intent
-                    .getParcelableExtra(WifiP2pManager.EXTRA_NETWORK_INFO);
+            Log.d(WiFiDirectActivity.TAG, "connection changed");
+           // NetworkInfo networkInfo = (NetworkInfo) intent.getParcelableExtra(WifiP2pManager.EXTRA_NETWORK_INFO);
 
-            if (networkInfo.isConnected()) {
+
+             Application application = activity.getApplication();
+            if (isNetworkAvailable(application)) {
+
+                Toast.makeText(activity, "hello", Toast.LENGTH_SHORT).show();
 
                 // we are connected with the other device, request connection
                 // info to find group owner IP
@@ -73,6 +84,7 @@ public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
                         .getFragmentManager().findFragmentById(R.id.frag_detail);
                 manager.requestConnectionInfo(channel, fragment);
             } else {
+                Toast.makeText(activity, "bello", Toast.LENGTH_SHORT).show();
                 // It's a disconnect
                 activity.resetData();
             }
@@ -84,4 +96,19 @@ public class WiFiDirectBroadcastReceiver extends BroadcastReceiver {
 
         }
     }
+
+    private Boolean isNetworkAvailable(Application application) {
+
+        ConnectivityManager connectivityManager = (ConnectivityManager) application.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            Network nw = connectivityManager.getActiveNetwork();
+            if (nw == null) return false;
+            NetworkCapabilities actNw = connectivityManager.getNetworkCapabilities(nw);
+            return actNw != null && (actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) || actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) || actNw.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) || actNw.hasTransport(NetworkCapabilities.TRANSPORT_BLUETOOTH));
+        } else {
+            NetworkInfo nwInfo = connectivityManager.getActiveNetworkInfo();
+            return nwInfo != null && nwInfo.isConnected();
+        }
+    }
+
 }
